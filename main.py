@@ -1,5 +1,6 @@
 from readCSV import readCSV
 import Map
+import Agent
 
 
 
@@ -8,7 +9,29 @@ def main():
     elevationMap = readCSV('ElevationMap.csv')
 
     map = Map.Map(elevationMap, trailMap)
+    map.printTrailMap()
+    map.printElevationMap()
+    map.printQTable()
     map.printPolicy()
+
+
+    agent = Agent.Agent(map)
+    agent.setTransitionModel('On', 'Low')
+
+    i = 0
+    while not agent.goalReached():
+
+        location1 = agent.location
+
+        location2 = agent.findNextLocation(location1)
+        agent.takeMove(location2)
+
+        location3 = agent.findNextLocation(location2)
+        print(location1, location2, location3)
+        agent.updateQTable(location1,location2, location3)
+
+        map.printQTable()
+        i += 1
 
 
 

@@ -5,6 +5,9 @@ class Map:
         self.elevationMap = elevationMap
         self.trailMap = trailMap
 
+        self.rows = len(trailMap)
+        self.columns = len(trailMap[0])
+
         # generate Q table and policy map
         self.qTable = []
         self.policyMap = []
@@ -13,14 +16,21 @@ class Map:
             rowPolicy = []
             for j in range(len(self.trailMap[i])):
                 if self.trailMap[i][j] != "X":
-                    rowQTable.append([0.0, 0.0, 0.0, 0.0])
-                    rowPolicy.append('?')
 
                     #record starting position and goal
                     if self.trailMap[i][j] == "S":
                         self.startPoint = [i, j]
+                        rowQTable.append([0.0, 0.0, 0.0, 0.0])
+                        rowPolicy.append('?')
+                        self.trailMap[i][j] = 1
                     elif self.trailMap[i][j] == "G":
+                        rowQTable.append('G')
+                        rowPolicy.append('G')
                         self.goal = [i, j]
+                    else:
+                        rowQTable.append([0.0, 0.0, 0.0, 0.0])
+                        rowPolicy.append('?')
+
 
                 else:
                     rowQTable.append('X')
