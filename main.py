@@ -6,8 +6,8 @@ import time
 
 
 def main():
-    trailMap = readCSV('TrailMap.csv')
-    elevationMap = readCSV('ElevationMap.csv')
+    trailMap = readCSV('maps/TrailMap - 5x5.csv')
+    elevationMap = readCSV('maps/ElevationMap - 5x5.csv')
 
     map = Map.Map(elevationMap, trailMap)
     map.printTrailMap()
@@ -16,8 +16,10 @@ def main():
     map.printPolicy()
 
     startTime= time.time()
+    rewardList = []
+    totalMovesList = []
 
-    while time.time() - startTime < 10:
+    while time.time() - startTime < 60:
         agent = Agent.Agent(map)
         agent.setTransitionModel('On', 'Low')
 
@@ -32,11 +34,21 @@ def main():
             #print(location1, location2, location3)
             agent.updateQTable(location1,location2, location3)
 
-        map.printQTable()
+        rewardList.append(agent.totalReward)
+        totalMovesList.append(agent.moveCount)
+
+        #map.printQTable()
 
     map.printQTable()
     map.updatePolicyMap()
     map.printPolicy()
+
+    print(totalMovesList)
+    print(rewardList)
+
+    print(map.returnTrail())
+
+
 
 
 # Press the green button in the gutter to run the script.

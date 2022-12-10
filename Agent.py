@@ -5,12 +5,17 @@ class Agent:
     def __init__(self, map):
         self.map = map
         self.location = map.startPoint
+
         self.moveCount = 0
+        self.totalReward = 0
 
         self.gridSize = 5
 
         self.learningRate = 0.9
-        self.gamma = 0.1
+        self.gamma = 0.5
+
+        self.goalReward = 10000
+        self.reward = -0.02
 
         self.trailType = ''
         self.elevationDifficulty = ''
@@ -112,7 +117,7 @@ class Agent:
 
         nextIndex = nextLocation[2]
         if self.map.qTable[current[0]][current[1]] == 'G':
-            nextQ = 10
+            nextQ = self.goalReward
         else:
             nextQ = self.map.qTable[current[0]][current[1]][nextIndex]
 
@@ -120,8 +125,10 @@ class Agent:
         prevQ = self.map.qTable[prev[0]][prev[1]][index]
 
         self.map.qTable[prev[0]][prev[1]][index] = round(
-            prevQ + self.learningRate * (self.calculateRewardFull(prev, current) + self.gamma *nextQ - prevQ),
+            prevQ + self.learningRate * (self.calculateRewardFull(prev, current) + self.gamma * nextQ - prevQ),
             2)
+
+        self.totalReward += self.calculateRewardFull(prev, current)
 
 
 
@@ -189,5 +196,5 @@ class Agent:
             elif self.elevationDifficulty == 'High':
                 rewardFactorElevation = 1
 
-        reward = -0.2*(rewardFactorTrail + rewardFactorElevation)
+        reward = self.reward * (rewardFactorTrail + rewardFactorElevation)
         return reward
