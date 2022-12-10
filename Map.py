@@ -44,9 +44,11 @@ class Map:
     def updatePolicyMap(self):
         for i in range(len(self.qTable)):
             for j in range(len(self.qTable[i])):
-                if self.qTable[i][j] != 'X':
+                if self.qTable[i][j] != 'X' and self.qTable[i][j] != 'G':
                     direction = np.argmax(self.qTable[i][j])
-                    if direction == 0:
+                    if max(self.qTable[i][j]) == 0:
+                        self.policyMap[i][j] = '?'
+                    elif direction == 0:
                         self.policyMap[i][j] = '<'
                     elif direction == 1:
                         self.policyMap[i][j] = '>'

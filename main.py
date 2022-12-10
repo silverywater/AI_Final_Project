@@ -1,6 +1,7 @@
 from readCSV import readCSV
 import Map
 import Agent
+import time
 
 
 
@@ -14,26 +15,28 @@ def main():
     map.printQTable()
     map.printPolicy()
 
+    startTime= time.time()
 
-    agent = Agent.Agent(map)
-    agent.setTransitionModel('On', 'Low')
+    while time.time() - startTime < 10:
+        agent = Agent.Agent(map)
+        agent.setTransitionModel('On', 'Low')
 
-    i = 0
-    while not agent.goalReached():
+        while not agent.goalReached():
 
-        location1 = agent.location
+            location1 = agent.location
 
-        location2 = agent.findNextLocation(location1)
-        agent.takeMove(location2)
+            location2 = agent.findNextLocation(location1)
+            agent.takeMove(location2)
 
-        location3 = agent.findNextLocation(location2)
-        print(location1, location2, location3)
-        agent.updateQTable(location1,location2, location3)
+            location3 = agent.findNextLocation(location2)
+            #print(location1, location2, location3)
+            agent.updateQTable(location1,location2, location3)
 
         map.printQTable()
-        i += 1
 
-
+    map.printQTable()
+    map.updatePolicyMap()
+    map.printPolicy()
 
 
 # Press the green button in the gutter to run the script.

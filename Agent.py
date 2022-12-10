@@ -1,12 +1,19 @@
 import numpy as np
+import math
 
 class Agent:
     def __init__(self, map):
         self.map = map
         self.location = map.startPoint
+        self.moveCount = 0
+
+        self.gridSize = 5
 
         self.learningRate = 0.9
         self.gamma = 0.1
+
+        self.trailType = ''
+        self.elevationDifficulty = ''
 
         #transition model if no user inputs given
         self.probOn = 0.5
@@ -39,6 +46,9 @@ class Agent:
         return moves
 
     def setTransitionModel(self, trailType, elevationDifficulty):
+        self.trailType = trailType
+        self.elevationDifficulty = elevationDifficulty
+
         #trail type
         if trailType == 'On':
             self.probOn = 0.9
@@ -94,6 +104,7 @@ class Agent:
 
     def takeMove(self, nextLocation):
         self.location = nextLocation[:2]
+        self.moveCount+=1
 
     def updateQTable(self, previousLocation, currentLocation, nextLocation):
         prev = previousLocation[:2]
@@ -109,14 +120,74 @@ class Agent:
         prevQ = self.map.qTable[prev[0]][prev[1]][index]
 
         self.map.qTable[prev[0]][prev[1]][index] = round(
-            prevQ + self.learningRate * (self.calculateReward() + self.gamma *nextQ - prevQ),
+            prevQ + self.learningRate * (self.calculateRewardFull(prev, current) + self.gamma *nextQ - prevQ),
             2)
 
 
 
-    def calculateReward(self):
-        return 1
+    def calculateReward(self, location1, location2):
+        reward = 0
+        if self.trail_steepness(location1, location2) > 0.385:
+            reward = -0.04
+        else:
+            reward = -0.02
+        return reward
 
 
     def goalReached(self):
         return self.map.trailMap[self.location[0]][self.location[1]] == 'G'
+
+    def trail_steepness(self, location1, location2):
+        elevation1 = self.map.elevationMap[location2[0]][location2[1]]
+        elevation2 = self.map.elevationMap[location1[0]][location1[1]]
+        return math.atan((elevation2 - elevation1) / self.gridSize)
+
+    def calculateRewardFull(self, location1, location2):
+        trail = self.map.trailMap[location2[0]][location2[1]]
+
+        elevation2 = self.map.elevationMap[location2[0]][location2[1]]
+        elevation1 = self.map.elevationMap[location1[0]][location1[1]]
+
+        rewardFactorTrail = 1
+        if trail == 1:
+            if self.trailType == 'On':
+                rewardFactorTrail = 1
+            elif self.trailType == 'Off':
+                rewardFactorTrail = 2
+            elif self.trailType == 'Hybrid':
+                rewardFactorTrail == 1
+        elif trail == 0:
+            if self.trailType == 'On':
+                rewardFactorTrail = 3
+            elif self.trailType == 'Off':
+                rewardFactorTrail = 1
+            elif self.trailType == 'Hybrid':
+                rewardFactorTrail == 2
+
+        elevationChange = elevation2 -elevation1
+        rewardFactorElevation = 1
+        if elevationChange <= 2:
+            if self.elevationDifficulty == 'Low':
+                rewardFactorElevation = 1
+            elif self.elevationDifficulty == 'Medium':
+                rewardFactorElevation = 1
+            elif self.elevationDifficulty == 'High':
+                rewardFactorElevation = 1
+
+        elif elevationChange <= 5:
+            if self.elevationDifficulty == 'Low':
+                rewardFactorElevation = 2
+            elif self.elevationDifficulty == 'Medium':
+                rewardFactorElevation = 1
+            elif self.elevationDifficulty == 'High':
+                rewardFactorElevation = 1
+        else:
+            if self.elevationDifficulty == 'Low':
+                rewardFactorElevation = 5
+            elif self.elevationDifficulty == 'Medium':
+                rewardFactorElevation = 3
+            elif self.elevationDifficulty == 'High':
+                rewardFactorElevation = 1
+
+        reward = -0.2*(rewardFactorTrail + rewardFactorElevation)
+        return reward
