@@ -5,14 +5,15 @@ from tkinter import *
 from tkinter import ttk
 import tkinter as tk
 
-input_array = [[0, 0], [0, 0], 0, 0]
-def submit_handler(widget, start, goal, pathing, climbing):
+input_array = [[0, 0], [0, 0], 0, 0, 0]
+def submit_handler(widget, start, goal, pathing, climbing, reward):
     s = start.get().split(",")
     input_array[0] = s
     s2 = goal.get().split(",")
     input_array[1] = s2
     input_array[2] = pathing.get()
     input_array[3] = climbing.get()
+    input_array[4] = reward.get()
     print(str(input_array))
 def main():
     trailMap = readCSV('TrailMap.csv')
@@ -60,6 +61,8 @@ def inputInterface():
     control.set(1)
     control2 = IntVar()
     control2.set(1)
+    control3 = IntVar()
+    control3.set(1)
     path_radio_1 = ttk.Radiobutton(path_frame, value=1, variable=control)
     path_radio_2 = ttk.Radiobutton(path_frame, value=2, variable=control)
     path_radio_3 = ttk.Radiobutton(path_frame, value=3, variable=control)
@@ -68,7 +71,12 @@ def inputInterface():
     climb_radio_1 = ttk.Radiobutton(climb_frame, value=1, variable=control2)
     climb_radio_2 = ttk.Radiobutton(climb_frame, value=2, variable=control2)
     climb_radio_3 = ttk.Radiobutton(climb_frame, value=3, variable=control2)
-    submit_button = ttk.Button(root, command=lambda: submit_handler(submit_button,start_entry,goal_entry, control, control2))
+    reward_label = ttk.Label(root)
+    reward_frame = ttk.Frame(root)
+    reward_radio_1 = ttk.Radiobutton(reward_frame, value=1, variable=control3)
+    reward_radio_2 = ttk.Radiobutton(reward_frame, value=2, variable=control3)
+    reward_radio_3 = ttk.Radiobutton(reward_frame, value=3, variable=control3)
+    submit_button = ttk.Button(root, command=lambda: submit_handler(submit_button,start_entry,goal_entry, control, control2, control3))
     start_label["text"] = "Starting grid value (X and Y)"
     goal_label["text"] = "Ending grid value (X and Y)"
     path_label["text"] = "Degree of off-roading"
@@ -80,6 +88,10 @@ def inputInterface():
     climb_radio_1["text"] = "Low"
     climb_radio_2["text"] = "Medium"
     climb_radio_3["text"] = "High"
+    reward_label["text"] = "Reward Structure"
+    reward_radio_1["text"] = "Constant"
+    reward_radio_2["text"] = "Linear"
+    reward_radio_3["text"] = "Scaled"
     start_label.grid(row=0, column=0)
     start_entry.grid(row=0, column=1)
     goal_label.grid(row=1, column=0)
@@ -94,7 +106,12 @@ def inputInterface():
     climb_radio_1.grid(row=0, column=0)
     climb_radio_2.grid(row=0, column=1)
     climb_radio_3.grid(row=0, column=2)
-    submit_button.grid(row=4, column=1)
+    reward_label.grid(row=4, column=0)
+    reward_frame.grid(row=4, column=1)
+    reward_radio_1.grid(row=0, column=0)
+    reward_radio_2.grid(row=0, column=1)
+    reward_radio_3.grid(row=0, column=2)
+    submit_button.grid(row=5, column=1)
     root.mainloop()
 
 
