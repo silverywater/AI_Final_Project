@@ -18,10 +18,11 @@ def main():
     startTime= time.time()
     rewardList = []
     totalMovesList = []
-
+    timeList=[]
+    learningRate = 0.9
     while time.time() - startTime < 60:
-        agent = Agent.Agent(map)
-        agent.setTransitionModel('On', 'Low')
+        agent = Agent.Agent(map, learningRate)
+        agent.setTransitionModel('Off', 'Low')
 
         while not agent.goalReached():
 
@@ -36,6 +37,9 @@ def main():
 
         rewardList.append(agent.totalReward)
         totalMovesList.append(agent.moveCount)
+        timeList.append(time.time()-startTime)
+
+        learningRate*=0.995
 
         #map.printQTable()
 
@@ -43,8 +47,11 @@ def main():
     map.updatePolicyMap()
     map.printPolicy()
 
-    print(totalMovesList)
-    print(rewardList)
+    #print(totalMovesList)
+    #print(rewardList)
+    #print(timeList)
+
+    print(learningRate)
 
     print(map.returnTrail())
 

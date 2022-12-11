@@ -2,7 +2,7 @@ import numpy as np
 import math
 
 class Agent:
-    def __init__(self, map):
+    def __init__(self, map, learningRate):
         self.map = map
         self.location = map.startPoint
 
@@ -11,11 +11,11 @@ class Agent:
 
         self.gridSize = 5
 
-        self.learningRate = 0.9
-        self.gamma = 0.5
+        self.learningRate = learningRate
+        self.gamma = 0.3
 
-        self.goalReward = 10000
-        self.reward = -0.02
+        self.goalReward = 10
+        self.reward = -0.04
 
         self.trailType = ''
         self.elevationDifficulty = ''
@@ -56,28 +56,28 @@ class Agent:
 
         #trail type
         if trailType == 'On':
-            self.probOn = 0.9
-            self.probOff = 0.1
-        elif trailType == 'Off':
-            self.probOn = 0.1
-            self.probOff = 0.9
-        elif trailType == "Hybrid":
             self.probOn = 0.7
             self.probOff = 0.3
+        elif trailType == 'Off':
+            self.probOn = 0.3
+            self.probOff = 0.7
+        elif trailType == "Hybrid":
+            self.probOn = 0.55
+            self.probOff = 0.45
 
         #elevation difficulty
         if elevationDifficulty == 'Low':
-            self.prob2m = 0.8
-            self.prob5m = 0.1
-            self.prob10m = 0.1
-        elif elevationDifficulty == 'Medium':
             self.prob2m = 0.6
-            self.prob5m = 0.3
-            self.prob10m = 0.1
-        elif elevationDifficulty == 'High':
-            self.prob2m = 0.4
+            self.prob5m = 0.25
+            self.prob10m = 0.15
+        elif elevationDifficulty == 'Medium':
+            self.prob2m = 0.5
             self.prob5m = 0.35
-            self.prob10m = 0.25
+            self.prob10m = 0.15
+        elif elevationDifficulty == 'High':
+            self.prob2m = 0.30
+            self.prob5m = 0.35
+            self.prob10m = 0.35
         return
 
     def findNextLocation(self,location):
@@ -160,16 +160,16 @@ class Agent:
             if self.trailType == 'On':
                 rewardFactorTrail = 1
             elif self.trailType == 'Off':
-                rewardFactorTrail = 2
+                rewardFactorTrail = 3
             elif self.trailType == 'Hybrid':
                 rewardFactorTrail == 1
         elif trail == 0:
             if self.trailType == 'On':
-                rewardFactorTrail = 3
+                rewardFactorTrail = 5
             elif self.trailType == 'Off':
                 rewardFactorTrail = 1
             elif self.trailType == 'Hybrid':
-                rewardFactorTrail == 2
+                rewardFactorTrail == 4
 
         elevationChange = elevation2 -elevation1
         rewardFactorElevation = 1
@@ -179,20 +179,20 @@ class Agent:
             elif self.elevationDifficulty == 'Medium':
                 rewardFactorElevation = 1
             elif self.elevationDifficulty == 'High':
-                rewardFactorElevation = 1
+                rewardFactorElevation = 3
 
         elif elevationChange <= 5:
-            if self.elevationDifficulty == 'Low':
-                rewardFactorElevation = 2
-            elif self.elevationDifficulty == 'Medium':
-                rewardFactorElevation = 1
-            elif self.elevationDifficulty == 'High':
-                rewardFactorElevation = 1
-        else:
             if self.elevationDifficulty == 'Low':
                 rewardFactorElevation = 5
             elif self.elevationDifficulty == 'Medium':
                 rewardFactorElevation = 3
+            elif self.elevationDifficulty == 'High':
+                rewardFactorElevation = 2
+        else:
+            if self.elevationDifficulty == 'Low':
+                rewardFactorElevation = 10
+            elif self.elevationDifficulty == 'Medium':
+                rewardFactorElevation = 5
             elif self.elevationDifficulty == 'High':
                 rewardFactorElevation = 1
 
