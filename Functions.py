@@ -10,7 +10,7 @@ import math
 # ***************************************************************************************************************************
 
 steps = []
-steps_example = [[0,0,20,1],[0,1,22,1],[1,1,24,0],[1,2,30,0],[1,3,40,1]]
+steps_example = [[0,0,20,1],[0,1,22,1],[1,1,24,0],[1,2,28,0],[1,3,40,1]]
 # steps legend:
     # [0] = x coordinate
     # [1] = y coordinate
@@ -35,7 +35,7 @@ def calc_run_metrics(steps):
     metrics[0] = len(steps) - 1 #dropping by one since a 'step' is considered a move from one spot to the next, start position is not a step
 
     # iterate through all the values of the steps[] list
-    for i in range(metrics[0]):
+    for i in range(metrics[0]+1):
 
     # Net Elevation
         metrics[1] = metrics[1] + abs(steps[i][2] - steps[i-1][2])
