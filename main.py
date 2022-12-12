@@ -26,8 +26,8 @@ def main():
     elif input_array[3] == 3:
         elevationDifficulty = 'High'
 
-    fileTrailMap = 'maps/TrailMap - 5x5.csv'
-    fileElevationMap = 'maps/ElevationMap - 5x5.csv'
+    fileTrailMap = 'maps/TrailMap - 20x20.csv'
+    fileElevationMap = 'maps/ElevationMap - 20x20.csv'
 
     trailMap = readCSV(fileTrailMap)
     elevationMap = readCSV(fileElevationMap)
@@ -42,9 +42,12 @@ def main():
     rewardList = []
     totalMovesList = []
     timeList=[]
-    learningRate = 0.9
+    learningRate = 0.1
     #On = 0.3,  Off=0.6, Hybrid =0.45
-    gamma = 0.6
+    gamma = 0.9
+
+    file = open('reward.csv', 'w')
+    csvFile = csv.writer(file)
 
     while time.time() - startTime < 30:
         agent = Agent.Agent(map, learningRate, gamma)
@@ -61,11 +64,12 @@ def main():
             #print(location1, location2, location3)
             agent.updateQTable(location1,location2, location3)
 
+        csvFile.writerow([time.time()-startTime,agent.totalReward,agent.moveCount])
         rewardList.append(agent.totalReward)
         totalMovesList.append(agent.moveCount)
         timeList.append(time.time()-startTime)
 
-        learningRate*=0.995
+        #learningRate*=0.995
         #gamma *=0.9995
 
         #map.printQTable()
@@ -77,6 +81,7 @@ def main():
     #print(totalMovesList)
     #print(rewardList)
     #print(timeList)
+
 
     print(learningRate)
 

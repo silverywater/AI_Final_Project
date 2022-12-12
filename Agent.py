@@ -125,6 +125,8 @@ class Agent:
         nextIndex = nextLocation[2]
         if self.map.qTable[current[0]][current[1]] == 'G':
             nextQ = self.goalReward
+
+            self.totalReward += self.goalReward
         else:
             #Qlearning
             moves = self.findPossibleMoves(currentLocation)
@@ -137,6 +139,8 @@ class Agent:
             #SARSA
             #nextQ = self.map.qTable[current[0]][current[1]][nextIndex]
 
+            self.totalReward += self.calculateRewardFull(prev, current)
+
         index = currentLocation[2]
         prevQ = self.map.qTable[prev[0]][prev[1]][index]
 
@@ -144,7 +148,7 @@ class Agent:
             prevQ + self.learningRate * (self.calculateRewardFull(prev, current) + self.gamma * nextQ - prevQ),
             2)
 
-        self.totalReward += self.calculateRewardFull(prev, current)
+
 
 
 
