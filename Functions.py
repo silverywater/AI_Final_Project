@@ -44,7 +44,7 @@ longest_continuous_elevation_segment = 0 #def need to initialize this one
 
 # this function takes two input numbers (the x and y values from an array) and outputs a number (distance)
 def pythagorean_distance(x1, x2, y1, y2):
-    return math.sqrt( (((x2 - x1)*grid_square_size)**2) + ((y2 - y1)**2) )
+    return math.sqrt((((x2 - x1)*grid_square_size)**2) + ((y2 - y1)**2) )
 
 
 # function takes two heights at and outputs the angle relative to the horizon

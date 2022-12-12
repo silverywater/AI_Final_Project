@@ -1,12 +1,13 @@
 from readCSV import readCSV
 import Map
 import Agent
+import time
 
 
 
 def main():
-    trailMap = readCSV('TrailMap.csv')
-    elevationMap = readCSV('ElevationMap.csv')
+    trailMap = readCSV('maps/TrailMap - 5x5.csv')
+    elevationMap = readCSV('maps/ElevationMap - 5x5.csv')
 
     map = Map.Map(elevationMap, trailMap)
     map.printTrailMap()
@@ -14,24 +15,45 @@ def main():
     map.printQTable()
     map.printPolicy()
 
+    startTime= time.time()
+    rewardList = []
+    totalMovesList = []
+    timeList=[]
+    learningRate = 0.9
+    while time.time() - startTime < 60:
+        agent = Agent.Agent(map, learningRate)
+        agent.setTransitionModel('Off', 'Low')
 
-    agent = Agent.Agent(map)
-    agent.setTransitionModel('On', 'Low')
+        while not agent.goalReached():
 
-    i = 0
-    while not agent.goalReached():
+            location1 = agent.location
 
-        location1 = agent.location
+            location2 = agent.findNextLocation(location1)
+            agent.takeMove(location2)
 
-        location2 = agent.findNextLocation(location1)
-        agent.takeMove(location2)
+            location3 = agent.findNextLocation(location2)
+            #print(location1, location2, location3)
+            agent.updateQTable(location1,location2, location3)
 
-        location3 = agent.findNextLocation(location2)
-        print(location1, location2, location3)
-        agent.updateQTable(location1,location2, location3)
+        rewardList.append(agent.totalReward)
+        totalMovesList.append(agent.moveCount)
+        timeList.append(time.time()-startTime)
 
-        map.printQTable()
-        i += 1
+        learningRate*=0.995
+
+        #map.printQTable()
+
+    map.printQTable()
+    map.updatePolicyMap()
+    map.printPolicy()
+
+    #print(totalMovesList)
+    #print(rewardList)
+    #print(timeList)
+
+    print(learningRate)
+
+    print(map.returnTrail())
 
 
 
