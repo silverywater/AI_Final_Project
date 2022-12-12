@@ -2,12 +2,35 @@ from readCSV import readCSV
 import Map
 import Agent
 import time
+import csv
+from MetricFunctions import calc_run_metrics
+from FrontEnd import inputInterface
 
 
 
 def main():
-    trailMap = readCSV('maps/TrailMap - 5x5.csv')
-    elevationMap = readCSV('maps/ElevationMap - 5x5.csv')
+    input_array = [[0, 0], [0, 0], 0, 0, 0]
+    inputInterface(input_array)
+
+    if input_array[2] == 1:
+        trailType = 'On'
+    elif input_array[2] == 2:
+        trailType = 'Off'
+    elif input_array[2] == 3:
+        trailType = 'Hybrid'
+
+    if input_array[3] == 1:
+        elevationDifficulty = 'Low'
+    elif input_array[3] == 2:
+        elevationDifficulty = 'Medium'
+    elif input_array[3] == 3:
+        elevationDifficulty = 'High'
+
+    fileTrailMap = 'maps/TrailMap - 5x5.csv'
+    fileElevationMap = 'maps/ElevationMap - 5x5.csv'
+
+    trailMap = readCSV(fileTrailMap)
+    elevationMap = readCSV(fileElevationMap)
 
     map = Map.Map(elevationMap, trailMap)
     map.printTrailMap()
@@ -20,9 +43,12 @@ def main():
     totalMovesList = []
     timeList=[]
     learningRate = 0.9
-    while time.time() - startTime < 60:
-        agent = Agent.Agent(map, learningRate)
-        agent.setTransitionModel('Off', 'Low')
+    #On = 0.3,  Off=0.6, Hybrid =0.45
+    gamma = 0.6
+
+    while time.time() - startTime < 30:
+        agent = Agent.Agent(map, learningRate, gamma)
+        agent.setTransitionModel(trailType, elevationDifficulty)
 
         while not agent.goalReached():
 
@@ -40,6 +66,7 @@ def main():
         timeList.append(time.time()-startTime)
 
         learningRate*=0.995
+        #gamma *=0.9995
 
         #map.printQTable()
 
@@ -53,9 +80,15 @@ def main():
 
     print(learningRate)
 
+    file = open('output.csv','a')
+    csvFile = csv.writer(file)
+
+    if map.returnTrail():
+        csvFile.writerow([fileTrailMap, agent.trailType, agent.elevationDifficulty, calc_run_metrics(map.returnTrail())])
+    else:
+        csvFile.writerow([fileTrailMap, agent.trailType, agent.elevationDifficulty])
+
     print(map.returnTrail())
-
-
 
 
 # Press the green button in the gutter to run the script.
