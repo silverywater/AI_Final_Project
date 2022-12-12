@@ -1,0 +1,53 @@
+maps/TrailMap - 10x10 - 3.csv,Hybrid,Medium,"[18, 52, 12, 5, 0, 13]"
+maps/TrailMap - 10x10 - 3.csv,Off,Medium,"[18, 60, 10, 6, 1, 5]"
+maps/TrailMap - 10x10 - 3.csv,On,Medium,"[18, 52, 12, 5, 0, 18]"
+maps/TrailMap - 10x10 - 3.csv,On,Low,"[18, 52, 12, 5, 0, 18]"
+maps/TrailMap - 10x10 - 3.csv,Hybrid,Low
+maps/TrailMap - 10x10 - 4.csv,Hybrid,Medium,"[10, 168, 5, 0, 4, 6]"
+maps/TrailMap - 10x10 - 4.csv,Off,Medium,"[10, 168, 5, 0, 4, 6]"
+maps/TrailMap - 10x10 - 4.csv,On,Medium
+maps/TrailMap - 10x10 - 4.csv,Hybrid,Low
+maps/TrailMap - 10x10 - 4.csv,Off,Low
+maps/TrailMap - 10x10 - 4.csv,On,Low
+maps/TrailMap - 10x10 - 5.csv,Hybrid,Medium,"[11, 40, 6, 0, 4, 10]"
+maps/TrailMap - 10x10 - 5.csv,Off,Medium
+maps/TrailMap - 10x10 - 5.csv,On,Medium,"[11, 40, 6, 0, 4, 11]"
+maps/TrailMap - 10x10 - 5.csv,Hybrid,Low,"[11, 40, 6, 0, 4, 10]"
+maps/TrailMap - 10x10 - 5.csv,Off,Low
+maps/TrailMap - 10x10 - 5.csv,On,Low
+maps/TrailMap - 10x10 - 1.csv,Hybrid,High,"[10, 38, 5, 1, 3, 3]"
+maps/TrailMap - 10x10 - 1.csv,Off,High,"[10, 40, 5, 1, 3, 1]"
+maps/TrailMap - 10x10 - 1.csv,On,High,"[10, 22, 9, 0, 0, 10]"
+maps/TrailMap - 10x10 - 1.csv,Hybrid,Medium,"[10, 22, 9, 0, 0, 7]"
+maps/TrailMap - 10x10 - 1.csv,Off,Medium,"[10, 36, 5, 2, 2, 1]"
+maps/TrailMap - 10x10 - 1.csv,On,Medium,"[10, 22, 9, 0, 0, 10]"
+maps/TrailMap - 10x10 - 1.csv,Hybrid,Low,"[10, 22, 9, 0, 0, 7]"
+maps/TrailMap - 10x10 - 1.csv,Off,Low,"[10, 24, 7, 1, 1, 3]"
+maps/TrailMap - 10x10 - 1.csv,On,Low,"[10, 22, 9, 0, 0, 10]"
+maps/TrailMap - 10x10 - 2.csv,Hybrid,High
+maps/TrailMap - 10x10 - 2.csv,Off,High,"[18, 64, 9, 6, 2, 3]"
+maps/TrailMap - 10x10 - 2.csv,On,High,"[18, 50, 13, 3, 1, 18]"
+maps/TrailMap - 10x10 - 2.csv,Hybrid,Medium,"[18, 52, 12, 5, 0, 6]"
+maps/TrailMap - 10x10 - 2.csv,Off,Medium,"[18, 60, 10, 6, 1, 3]"
+maps/TrailMap - 10x10 - 2.csv,On,Medium,"[20, 50, 16, 3, 0, 20]"
+maps/TrailMap - 10x10 - 2.csv,Hybrid,Low,"[18, 52, 12, 5, 0, 6]"
+maps/TrailMap - 10x10 - 2.csv,Off,Low
+maps/TrailMap - 10x10 - 2.csv,On,Low
+maps/TrailMap - 10x10 - 3.csv,Hybrid,High,"[18, 74, 8, 7, 2, 7]"
+maps/TrailMap - 10x10 - 3.csv,Off,High,"[18, 64, 10, 5, 2, 5]"
+maps/TrailMap - 10x10 - 3.csv,On,High,"[18, 50, 13, 3, 1, 18]"
+maps/TrailMap - 10x10 - 4.csv,Hybrid,High,"[10, 160, 0, 2, 7, 10]"
+maps/TrailMap - 10x10 - 4.csv,Off,High,"[10, 168, 5, 0, 4, 6]"
+maps/TrailMap - 10x10 - 4.csv,On,High,"[10, 160, 0, 2, 7, 10]"
+maps/TrailMap - 10x10 - 5.csv,Hybrid,High,"[11, 40, 5, 0, 5, 7]"
+maps/TrailMap - 10x10 - 5.csv,Off,High
+maps/TrailMap - 10x10 - 5.csv,On,High,"[11, 40, 6, 0, 4, 11]"
+maps/TrailMap - 5x5.csv,Hybrid,High,"[6, 34, 1, 0, 4, 4]"
+maps/TrailMap - 5x5.csv,Off,High,"[6, 30, 0, 3, 2, 3]"
+maps/TrailMap - 5x5.csv,On,High,"[6, 30, 2, 1, 2, 6]"
+maps/TrailMap - 5x5.csv,Hybrid,Medium,"[6, 30, 2, 1, 2, 6]"
+maps/TrailMap - 5x5.csv,Off,Medium,"[6, 30, 0, 3, 2, 3]"
+maps/TrailMap - 5x5.csv,On,Medium,"[6, 30, 2, 1, 1, 5]"
+maps/TrailMap - 5x5.csv,Hybrid,Low,"[6, 30, 2, 1, 1, 5]"
+maps/TrailMap - 5x5.csv,Off,Low,"[6, 30, 2, 1, 2, 5]"
+maps/TrailMap - 5x5.csv,On,Low,"[6, 30, 2, 1, 2, 6]"
