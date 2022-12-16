@@ -74,10 +74,13 @@ def inputInterface(input_array):
 
 def submit_handler(widget, start, goal, pathing, climbing, reward, input_array):
     s = start.get().split(",")
+    s[0] = int(s[0])
+    s[1] = int(s[1])
     input_array[0] = s
     s2 = goal.get().split(",")
+    s2[0] = int(s2[0])
+    s2[1] = int(s2[1])
     input_array[1] = s2
     input_array[2] = pathing.get()
     input_array[3] = climbing.get()
     input_array[4] = reward.get()
-    print(str(input_array))

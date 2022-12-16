@@ -12,6 +12,12 @@ def main():
     input_array = [[0, 0], [0, 0], 0, 0, 0]
     inputInterface(input_array)
 
+    print('User Input: ')
+    print(input_array)
+    print()
+
+
+
     if input_array[2] == 1:
         trailType = 'On'
     elif input_array[2] == 2:
@@ -26,17 +32,25 @@ def main():
     elif input_array[3] == 3:
         elevationDifficulty = 'High'
 
-    fileTrailMap = 'maps/TrailMap - 20x20.csv'
-    fileElevationMap = 'maps/ElevationMap - 20x20.csv'
+    fileTrailMap = 'maps/TrailMap - 10x10 - 1.csv'
+    fileElevationMap = 'maps/ElevationMap - 10x10 - 1.csv'
 
     trailMap = readCSV(fileTrailMap)
     elevationMap = readCSV(fileElevationMap)
 
     map = Map.Map(elevationMap, trailMap)
+    if input_array[0] != input_array[1]:
+        map.startPoint = input_array[0]
+        map.setGoal(input_array[1])
+    print('Existing Trails Map: ')
     map.printTrailMap()
+    print()
+
+    print('Elevation Map')
     map.printElevationMap()
-    map.printQTable()
-    map.printPolicy()
+    print()
+    #map.printQTable()
+    #map.printPolicy()
 
     startTime= time.time()
     rewardList = []
@@ -44,7 +58,7 @@ def main():
     timeList=[]
     learningRate = 0.1
     #On = 0.3,  Off=0.6, Hybrid =0.45
-    gamma = 0.9
+    gamma = 1
 
     file = open('reward.csv', 'w')
     csvFile = csv.writer(file)
@@ -69,21 +83,20 @@ def main():
         totalMovesList.append(agent.moveCount)
         timeList.append(time.time()-startTime)
 
-        #learningRate*=0.995
-        #gamma *=0.9995
 
-        #map.printQTable()
-
+    print('Final Q Table')
     map.printQTable()
+    print()
+
     map.updatePolicyMap()
+    print('Final Policy Map')
     map.printPolicy()
+    print()
 
     #print(totalMovesList)
     #print(rewardList)
     #print(timeList)
 
-
-    print(learningRate)
 
     file = open('output.csv','a')
     csvFile = csv.writer(file)
@@ -93,7 +106,13 @@ def main():
     else:
         csvFile.writerow([fileTrailMap, agent.trailType, agent.elevationDifficulty])
 
+    print('Suggested Trail:')
     print(map.returnTrail())
+    print()
+
+    print('Trail Metrics:')
+    print(calc_run_metrics(map.returnTrail()))
+    print()
 
 
 # Press the green button in the gutter to run the script.

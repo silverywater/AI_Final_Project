@@ -123,4 +123,12 @@ class Map:
 
         return steps
 
+    def setGoal(self, newGoal):
+        self.trailMap[self.goal[0]][self.goal[1]] = 1
+        self.qTable[self.goal[0]][self.goal[1]] = [0.0, 0.0, 0.0, 0.0]
+        self.policyMap[self.goal[0]][self.goal[1]]= '?'
 
+
+        self.trailMap[newGoal[0]][newGoal[1]] = 'G'
+        self.qTable[newGoal[0]][newGoal[1]] = 'G'
+        self.policyMap[newGoal[0]][newGoal[1]] = 'G'

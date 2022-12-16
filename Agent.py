@@ -179,6 +179,7 @@ class Agent:
         distanceToGoal2 =(location2[0] - self.map.goal[0]) +(location2[1] - self.map.goal[1])
 
 
+        goalFactor =1
         if distanceToGoal2 <= distanceToGoal1:
             goalFactor = 0.7
         else:
